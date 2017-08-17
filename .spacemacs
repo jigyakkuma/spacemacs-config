@@ -55,16 +55,21 @@ values."
      syntax-checking
      version-control
      (go :variables
-         go-tab-width 2)
+         go-tab-width 2
+         before-save-hook 'gofmt-before-save)
      (ruby :variables
            ruby-enable-enh-ruby-mode t)
      ruby-on-rails
-     my-perl
      javascript
      yaml
-     auto-completion
+     (auto-completion :variables
+           auto-completion-private-snippets-directory "~/src/github.com/jigyakkuma/spacemacs-config/assets/snippets"
+                      )
      shell-scripts
      imenu-list
+     ;; original layers
+     my-perl
+     linux-clipboard
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -350,37 +355,6 @@ you should place your code here."
   (setq x-select-enable-clipboard t)
   (global-git-commit-mode t)
   (add-to-list 'exec-path "~/bin")
-
-  ;;copy and paste command for Linux
-  (defun copy-to-clipboard ()
-    "Copies selection to x-clipboard."
-    (interactive)
-    (if (display-graphic-p)
-        (progn
-          (message "Yanked region to x-clipboard!")
-          (call-interactively 'clipboard-kill-ring-save)
-          )
-      (if (region-active-p)
-          (progn
-            (shell-command-on-region (region-beginning) (region-end) "xsel --clipboard --input")
-            (message "Yanked region to clipboard!")
-            (deactivate-mark))
-        (message "No region active; can't yank to clipboard!")))
-    )
-
-  (defun paste-from-clipboard ()
-    "Pastes from x-clipboard."
-    (interactive)
-    (if (display-graphic-p)
-        (progn
-          (clipboard-yank)
-          (message "graphics active")
-          )
-      (insert (shell-command-to-string "xsel --clipboard --output"))
-      )
-    )
-  (evil-leader/set-key "o y" 'copy-to-clipboard)
-  (evil-leader/set-key "o p" 'paste-from-clipboard)
 )
 
 
