@@ -356,8 +356,6 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (global-git-commit-mode t)
   (global-company-mode t)
-  (add-to-list 'exec-path "~/bin")
-  (add-to-list 'exec-path "~/.linuxbrew")
 
   ;; Key bind
   (evil-leader/set-key "b l" 'ibuffer)
