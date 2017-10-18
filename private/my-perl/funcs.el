@@ -17,3 +17,4 @@
   (interactive)
   (save-excursion (mark-whole-buffer)
     (perltidy-region)))
+

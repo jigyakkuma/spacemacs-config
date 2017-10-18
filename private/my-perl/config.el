@@ -4,6 +4,7 @@
 (add-to-list 'auto-mode-alist '(".+\\.p[lm]$" . cperl-mode))
 (add-to-list 'auto-mode-alist '(".+\\.t$" . cperl-mode))
 (add-to-list 'auto-mode-alist '(".+\\.psgi$" . cperl-mode))
+(add-to-list 'auto-mode-alist '(".+\\.tx$" . web-mode))
 
 ;; indent
 (custom-set-variables
@@ -17,4 +18,7 @@
  '(cperl-highlight-variables-indiscriminately t)
  '(cperl-indent-subs-specially nil)
  '(cperl-indent-region-fix-constructs nil))
+
+;; always use cperl-mode instead of perl-mode
+(defalias 'perl-mode 'cperl-mode)
 
