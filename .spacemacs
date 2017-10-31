@@ -346,9 +346,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 2
    web-mode-indent-style 2)
-
-  ;; for 'No newline at end of file'
-  (setq require-final-newline nil)
 )
 
 (defun dotspacemacs/user-config ()
@@ -367,6 +364,10 @@ you should place your code here."
   (evil-leader/set-key "w S" 'split-window-below)
   (evil-leader/set-key "w v" 'split-window-right-and-focus)
   (evil-leader/set-key "w V" 'split-window-right)
+
+  ;; for 'No newline at end of file'
+  (setq-default
+   require-final-newline nil)
 )
 
 
