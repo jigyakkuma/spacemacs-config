@@ -33,10 +33,6 @@ values."
      docker
      sql
      csv
-     python
-     vimscript
-     php
-     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -59,6 +55,7 @@ values."
      spell-checking
      syntax-checking
      version-control
+     ;; lang
      (go :variables
          go-tab-width 2
          before-save-hook 'gofmt-before-save)
@@ -66,12 +63,16 @@ values."
            ruby-enable-enh-ruby-mode t
            ruby-version-manager 'rbenv)
      ruby-on-rails
+     php
+     python
+     html
      javascript
      yaml
      (auto-completion :variables
            auto-completion-private-snippets-directory "~/src/github.com/jigyakkuma/spacemacs-config/assets/snippets"
                       )
      shell-scripts
+     vimscript
      imenu-list
      ;; original layers
      my-perl
@@ -163,8 +164,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Ricty"
-                               :size 13
+   dotspacemacs-default-font '("Source Code Pro"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
