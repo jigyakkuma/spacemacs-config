@@ -11,10 +11,10 @@
     (dolist
       (mode '(perl-mode cperl-mode))
 
-      (spacemacs/declare-prefix "md" "Perl/perldoc")
+      (spacemacs/declare-prefix "mh" "Perl/perldoc")
       (spacemacs/set-leader-keys-for-major-mode mode
-        "do" 'cperl-perldoc
-        "da" 'cperl-perldoc-at-point)
+        "hd" 'cperl-perldoc
+        "hh" 'cperl-perldoc-at-point)
 
       (spacemacs/declare-prefix "mf" "Perl/perltidy")
       (spacemacs/set-leader-keys-for-major-mode mode
