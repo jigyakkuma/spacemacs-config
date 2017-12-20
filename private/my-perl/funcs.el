@@ -1,20 +1,50 @@
-(defvar perltidy-configuration-file (format "%s/.perltidyrc" (getenv "HOME")))
+;;; funcs.el --- Perl5 Layer functions File for Spacemacs
+;;
+;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
+;;
+;; Author: Eivind Fonn <evfonn@gmail.com>
+;; URL: https://github.com/syl20bnr/spacemacs
+;;
+;; This file is not part of GNU Emacs.
+;;
+;;; License: GPLv3
 
-(defun perltidy-region ()
-  "Run perltidy on the current region."
+
+(defun spacemacs//perl5-smartparens-enable ()
+  (define-key cperl-mode-map "{" nil))
+
+(defun spacemacs//perl5-spartparens-disable ()
+  (define-key cperl-mode-map "{" 'cperl-electric-lbrace))
+
+(defun spacemacs/perltidy-format ()
+  "Format Perl code with perltidy.
+If region is active, operate on it, else operate on line."
   (interactive)
-  (save-excursion
-    (shell-command-on-region (point) (mark) (format "perltidy -q -pro=%s" perltidy-configuration-file) nil t)))
+  (let ((old-point (point))
+        (pos
+         (if (use-region-p)
+             (cons (region-beginning)
+                   (if (char-equal ?\n (char-before (region-end)))
+                       (region-end)
+                     (save-excursion ;; must including terminating newline
+                       (goto-char (region-end))
+                       (1+ (line-end-position)))))
+           (cons (line-beginning-position)
+                 (1+ (line-end-position))))))
+    (apply #'call-process-region (car pos) (cdr pos) perl5-perltidy-executable t '(t nil)
+           "--quiet"
+           "--standard-error-output"
+           perl5-perltidy-options)
+    (goto-char old-point)))
 
-(defun perltidy-defun ()
-  "Run perltidy on the current defun."
+(defun spacemacs/perltidy-format-buffer ()
+  "Format current buffer with perltidy."
   (interactive)
-  (save-excursion (mark-defun)
-    (perltidy-region)))
+  (mark-whole-buffer)
+  (spacemacs/perltidy-format))
 
-(defun perltidy-buffer ()
-  "Run perltidy on the current buffer."
+(defun spacemacs/perltidy-format-function ()
+  "Format current function with perltidy."
   (interactive)
-  (save-excursion (mark-whole-buffer)
-    (perltidy-region)))
-
+  (mark-defun)
+  (spacemacs/perltidy-format))
