@@ -360,6 +360,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; display time
+  (display-time-mode 1)
 
   ;;vue-mode
   (add-to-list 'auto-mode-alist '("\\.vue$\\'" . web-mode))
@@ -368,6 +370,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; mozc setting
   (setq default-input-method "japanese-mozc")
+  (setq mozc-candidate-style 'echo-area)
 
   ;; indent
   (setq-default
