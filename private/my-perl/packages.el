@@ -54,7 +54,7 @@
       (flycheck-define-checker perl-project-libs
         "A perl syntax checker."
         :command ("perl"
-                  "-MProject::Libs lib_dirs => [qw(local/lib/perl5)]"
+                  "-MProject::Libs lib_dirs => [qw(local/lib/perl5 t)]"
                   "-wc"
                   source-inplace)
         :standard-input t

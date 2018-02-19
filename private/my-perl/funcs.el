@@ -16,35 +16,22 @@
 (defun spacemacs//perl5-spartparens-disable ()
   (define-key cperl-mode-map "{" 'cperl-electric-lbrace))
 
-(defun spacemacs/perltidy-format ()
-  "Format Perl code with perltidy.
-If region is active, operate on it, else operate on line."
-  (interactive)
-  (let ((old-point (point))
-        (pos
-         (if (use-region-p)
-             (cons (region-beginning)
-                   (if (char-equal ?\n (char-before (region-end)))
-                       (region-end)
-                     (save-excursion ;; must including terminating newline
-                       (goto-char (region-end))
-                       (1+ (line-end-position)))))
-           (cons (line-beginning-position)
-                 (1+ (line-end-position))))))
-    (apply #'call-process-region (car pos) (cdr pos) perl5-perltidy-executable t '(t nil)
-           "--quiet"
-           "--standard-error-output"
-           perl5-perltidy-options)
-    (goto-char old-point)))
+(defvar perltidy-configuration-file (format "%s/.perltidyrc" (getenv "HOME")))
 
-(defun spacemacs/perltidy-format-buffer ()
-  "Format current buffer with perltidy."
+(defun perltidy-region ()
+  "Run perltidy on the current region."
   (interactive)
-  (mark-whole-buffer)
-  (spacemacs/perltidy-format))
+  (save-excursion
+    (shell-command-on-region (point) (mark) (format "perltidy -q -pro=%s" perltidy-configuration-file) nil t)))
 
-(defun spacemacs/perltidy-format-function ()
-  "Format current function with perltidy."
+(defun perltidy-defun ()
+  "Run perltidy on the current defun."
   (interactive)
-  (mark-defun)
-  (spacemacs/perltidy-format))
+  (save-excursion (mark-defun)
+                  (perltidy-region)))
+
+(defun perltidy-buffer ()
+  "Run perltidy on the current buffer."
+  (interactive)
+  (save-excursion (mark-whole-buffer)
+                  (perltidy-region)))
