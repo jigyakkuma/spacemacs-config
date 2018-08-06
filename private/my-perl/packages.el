@@ -1,10 +1,18 @@
 (defconst my-perl-packages
       '(
+        ;; (company-plsense :requires company  )
         (cperl-mode :location built-in)
         flycheck
-        (flycheck-my-perl :requires flycheck
-                          :location local)
+        ;; (flycheck-my-perl :requires flycheck)
+        (pangu-spacing :excluded t)
         ))
+
+;; (defun my-perl/init-company-plsense ()
+;;   (use-package company-plsense
+;;     :init
+;;     (spacemacs|add-company-backends
+;;       :backends company-plsense
+;;       :modes cperl-mode)))
 
 (defun my-perl/init-cperl-mode ()
   (use-package cperl-mode
@@ -24,26 +32,27 @@
 
     ))
 
-(defun my-perl/init-flycheck-my-perl ()
-  (use-package flycheck-my-perl
-    :init
-    (progn
-      (flycheck-define-checker perl-project-libs
-        "A perl syntax checker."
-        :command ("perl"
-                  "-MProject::Libs lib_dirs => [qw(local/lib/perl5 t)]"
-                  "-wc"
-                  source-inplace)
-        :standard-input t
-        :error-patterns ((error line-start
-                                (minimal-match (message))
-                                " at " (file-name) " line " line
-                                (or "." (and ", " (zero-or-more not-newline)))
-                                line-end))
-        :modes (cperl-mode)
-        :next-checkers (perl-perlcritic)))
-    (add-to-list 'flycheck-checkers 'perl-project-libs)
-    ))
+;; (defun my-perl/init-flycheck-my-perl ()
+;;   (use-package flycheck-my-perl
+;;     :init
+;;     (progn
+;;       (flycheck-define-checker perl-project-libs
+;;         "A perl syntax checker."
+;;         :command ("perl"
+;;                   "-MProject::Libs lib_dirs => [qw(local/lib/perl5 t)]"
+;;                   "-wc"
+;;                   source-inplace)
+;;         :standard-input t
+;;         :error-patterns ((error line-start
+;;                                 (minimal-match (message))
+;;                                 " at " (file-name) " line " line
+;;                                 (or "." (and ", " (zero-or-more not-newline)))
+;;                                 line-end))
+;;         :modes (cperl-mode)
+;;                 :next-checkers (perl-perlcritic)
+;;         ))
+;;     (add-to-list 'flycheck-checkers 'perl-project-libs)
+;;     ))
 
 (defun my-perl/post-init-flycheck ()
   (spacemacs/enable-flycheck 'cperl-mode)
